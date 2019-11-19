@@ -47,19 +47,19 @@ help: ## This help.
 # Build the container
 build: ## Build the container
 	@:$(call check_defined, APP_NAME, container name)
-	@:$(call check_defined, BUILD_DIST, container name)
+	@:$(call check_defined, BUILD_DIST, distribution to build)
 	@:$(call check_defined, NAMESPACE_USER, docker namespace username)
 	docker build --build-arg BUILD_DIST=$(BUILD_DIST) -t $(NAMESPACE_USER)/$(APP_NAME) .
 
 build-nc: ## Build the container without caching
 	@:$(call check_defined, APP_NAME, container name)
-	@:$(call check_defined, BUILD_DIST, container name)
+	@:$(call check_defined, BUILD_DIST, distribution to build)
 	@:$(call check_defined, NAMESPACE_USER, docker namespace username)
 	docker build --no-cache --build-arg BUILD_DIST=$(BUILD_DIST) -t $(NAMESPACE_USER)/$(APP_NAME) .
 
 run: ## Run container on port configured in `env.config`
 	@:$(call check_defined, APP_NAME, container name)
-	@:$(call check_defined, BUILD_DIST, container name)
+	@:$(call check_defined, BUILD_DIST, distribution to build)
 	@:$(call check_defined, NAMESPACE_USER, docker namespace username)
 	docker run -it --rm \
 	 --privileged \
@@ -91,7 +91,7 @@ publish-latest: tag-latest ## Publish the `latest` taged container to hub
 publish-version: tag-version ## Publish the `{version}` tagged container to hub
 	@echo '>>> publish $(VERSION) to $(DOCKER_REPO)'
 	@:$(call check_defined, APP_NAME, container name)
-	@:$(call check_defined, BUILD_DIST, container name)
+	@:$(call check_defined, BUILD_DIST, distribution to build)
 	@:$(call check_defined, NAMESPACE_USER, docker namespace username)
 	docker push $(NAMESPACE_USER)/$(APP_NAME):$(BUILD_DIST)
 
@@ -107,11 +107,11 @@ tag-latest: ## Generate container `{version}` tag
 tag-version: ## Generate container `latest` tag
 	@echo '>>> create tag $(VERSION)'
 	@:$(call check_defined, APP_NAME, container name)
-	@:$(call check_defined, BUILD_DIST, container name)
+	@:$(call check_defined, BUILD_DIST, distribution to build)
 	@:$(call check_defined, NAMESPACE_USER, docker namespace username)
 	docker tag $(NAMESPACE_USER)/$(APP_NAME) $(NAMESPACE_USER)/$(APP_NAME):$(BUILD_DIST)
 
 
 version: ## Output the current version
-	@:$(call check_defined, BUILD_DIST, container name)
+	@:$(call check_defined, BUILD_DIST, distribution to build)
 	@echo $(BUILD_DIST)
