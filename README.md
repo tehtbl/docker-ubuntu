@@ -17,6 +17,14 @@ Howto
 * Stop the running container: `make stop`
 * Build the container with differnt config and deploy file: `make cnf=env2.config dpl=env2.deploy build`
 
+* Examples:
+```
+BUILD_DIST=xenial make build-nc publish-latest
+BUILD_DIST=bionic make release
+
+for r in xenial bionic devel; do echo "${r}"; BUILD_DIST="${r}" make release; done
+```
+
 License
 -------
 

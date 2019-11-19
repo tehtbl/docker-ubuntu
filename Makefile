@@ -83,32 +83,32 @@ release: build-nc publish ## Make a release by building and publishing the `{ver
 publish: publish-latest publish-version ## Publish the `{version}` ans `latest` tagged containers to hub
 
 publish-latest: tag-latest ## Publish the `latest` taged container to hub
+	@echo '>>> publish latest to $(DOCKER_REPO)'
 	@:$(call check_defined, APP_NAME, container name)
 	@:$(call check_defined, NAMESPACE_USER, docker namespace username)
-	@echo 'publish latest to $(DOCKER_REPO)'
 	docker push $(NAMESPACE_USER)/$(APP_NAME):latest
 
 publish-version: tag-version ## Publish the `{version}` tagged container to hub
+	@echo '>>> publish $(VERSION) to $(DOCKER_REPO)'
 	@:$(call check_defined, APP_NAME, container name)
 	@:$(call check_defined, BUILD_DIST, container name)
 	@:$(call check_defined, NAMESPACE_USER, docker namespace username)
-	@echo 'publish $(VERSION) to $(DOCKER_REPO)'
 	docker push $(NAMESPACE_USER)/$(APP_NAME):$(BUILD_DIST)
 
 # Docker tagging
 tag: tag-latest tag-version ## Generate container tags for the `{version}` and `latest` tags
 
 tag-latest: ## Generate container `{version}` tag
-	@echo 'create tag latest'
+	@echo '>>> create tag latest'
 	@:$(call check_defined, APP_NAME, container name)
 	@:$(call check_defined, NAMESPACE_USER, docker namespace username)
 	docker tag $(NAMESPACE_USER)/$(APP_NAME) $(NAMESPACE_USER)/$(APP_NAME):latest
 
 tag-version: ## Generate container `latest` tag
+	@echo '>>> create tag $(VERSION)'
 	@:$(call check_defined, APP_NAME, container name)
 	@:$(call check_defined, BUILD_DIST, container name)
 	@:$(call check_defined, NAMESPACE_USER, docker namespace username)
-	@echo 'create tag $(VERSION)'
 	docker tag $(NAMESPACE_USER)/$(APP_NAME) $(NAMESPACE_USER)/$(APP_NAME):$(BUILD_DIST)
 
 
