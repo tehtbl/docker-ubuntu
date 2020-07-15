@@ -22,7 +22,7 @@ Howto
 BUILD_DIST=xenial make build-nc publish-latest
 BUILD_DIST=bionic make release
 
-for r in xenial bionic devel; do echo "${r}"; BUILD_DIST="${r}" make release; done
+for r in xenial bionic focal devel; do echo "${r}"; BUILD_DIST="${r}" make release; done
 ```
 
 License
