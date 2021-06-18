@@ -6,14 +6,14 @@ This Dockerfile can build containers capable to use systemd.
 Howto
 -----
 
-* adjust files `env.config` and `dpl.config`
+* adjust files `env.config` and `env.deploy`
 * set/export `BUILD_DIST`
 
 * Build the container: `make build`
 * Build and publish the container: `make release`
 * Publish a container to docker-hub, includes login to the hub: `make publish`
 * Run the container: `make run`
-* Build an run the container: `make up`
+* Build and run the container: `make up`
 * Stop the running container: `make stop`
 * Build the container with differnt config and deploy file: `make cnf=env2.config dpl=env2.deploy build`
 
@@ -22,7 +22,7 @@ Howto
 BUILD_DIST=xenial make build-nc publish-latest
 BUILD_DIST=bionic make release
 
-for r in xenial bionic focal devel; do echo "${r}"; BUILD_DIST="${r}" make release; done
+for r in bionic focal devel {18,20}.04; do echo "${r}"; BUILD_DIST="${r}" make release; done
 ```
 
 License
